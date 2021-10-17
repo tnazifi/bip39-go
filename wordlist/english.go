@@ -4,6 +4,7 @@ import "strings"
 
 // English is a slice of mnemonic words from the bitcoin improvement plan
 var English = strings.Split(strings.TrimSpace(english), "\n")
+
 var english = `abandon
 ability
 able

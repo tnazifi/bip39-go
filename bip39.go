@@ -3,13 +3,10 @@ package bip39
 import (
 	"crypto/sha256"
 	"encoding/binary"
+	"fmt"
 	"math/big"
 	"math/rand"
 	"strings"
-)
-
-var (
-	wordlist = English
 )
 
 // NewEntropy ...
@@ -22,6 +19,8 @@ func NewEntropy() ([]byte, error) {
 
 // NewMnemonic ...
 func NewMnemonic(entropy []byte) (string, error) {
+	wordlist := GetWordList()
+
 	// length of entropy in bits
 	entropyBitLen := len(entropy) * 8
 	// checksum length in bits
@@ -89,5 +88,7 @@ func padSlice(data []byte, paddingLen int) []byte {
 }
 
 func main() {
-
+	entropy, _ := NewEntropy()
+	mnemonic, _ := NewMnemonic(entropy)
+	fmt.Printf("%s", mnemonic)
 }
