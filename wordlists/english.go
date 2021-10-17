@@ -1,4 +1,4 @@
-package bip39
+package wordlists
 
 import "strings"
 
