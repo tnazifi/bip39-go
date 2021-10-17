@@ -1,4 +1,4 @@
-package bip39
+package main
 
 import (
 	"crypto/sha256"
@@ -19,7 +19,7 @@ func NewEntropy() ([]byte, error) {
 
 // NewMnemonic ...
 func NewMnemonic(entropy []byte) (string, error) {
-	wordlist := GetWordList()
+	wordlist := GetWordlist()
 
 	// length of entropy in bits
 	entropyBitLen := len(entropy) * 8
