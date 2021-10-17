@@ -1,17 +1,17 @@
 package main
 
 import (
+	"crypto/rand"
 	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
 	"math/big"
-	"math/rand"
 	"strings"
 )
 
 // NewEntropy ...
 func NewEntropy() ([]byte, error) {
-	entropy := make([]byte, 256/8)
+	entropy := make([]byte, 32)
 	_, _ = rand.Read(entropy)
 
 	return entropy, nil
@@ -47,6 +47,7 @@ func NewMnemonic(entropy []byte) (string, error) {
 
 	for i := sentenceLen - 1; i >= 0; i-- {
 		word.And(entropyInt, big.NewInt(2047))
+		entropyInt.Div(entropyInt, big.NewInt(2048))
 		wordBytes := padSlice(word.Bytes(), 2)
 		wInd := binary.BigEndian.Uint16(wordBytes)
 		words[i] = wordlist[wInd]
@@ -90,5 +91,5 @@ func padSlice(data []byte, paddingLen int) []byte {
 func main() {
 	entropy, _ := NewEntropy()
 	mnemonic, _ := NewMnemonic(entropy)
-	fmt.Printf("%s", mnemonic)
+	fmt.Print(mnemonic)
 }
