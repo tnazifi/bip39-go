@@ -65,11 +65,13 @@ func addChecksum(entropy []byte) []byte {
 
 	checksumBitLen := uint(len(entropy) / 4)
 
+	// move checksum to rightmost bits
 	dataBigInt := new(big.Int).SetBytes(entropy)
-	//convert to little endian
+
 	for i := uint(0); i < checksumBitLen; i++ {
-		// bitshift to the left
+		// bitshift 1 left
 		dataBigInt.Mul(dataBigInt, big.NewInt(2))
+		// set right bit if left bit is set
 		if firstChecksumByte&(1<<(7-i)) > 0 {
 			dataBigInt.Or(dataBigInt, big.NewInt(1))
 		}
